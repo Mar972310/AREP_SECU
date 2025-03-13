@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bonoParcial</a> &gt; <a href="index.source.html" class="el_package">escuelaing.edu.arep.bonoParcial.Service.Impl</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package escuelaing.edu.arep.bonoParcial.Service.Impl;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import escuelaing.edu.arep.bonoParcial.DTO.UserDTO;
+import escuelaing.edu.arep.bonoParcial.Exception.UserException;
+import escuelaing.edu.arep.bonoParcial.Repository.UserRepository;
+import escuelaing.edu.arep.bonoParcial.Service.UserServiceInterface;
+import escuelaing.edu.arep.bonoParcial.model.User;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@Service
+public class UserService implements UserServiceInterface {
+
+    private final UserRepository userRepository;
+<span class="nc" id="L20">    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
+
+    @Autowired
+<span class="nc" id="L23">    public UserService(UserRepository userRepository) {</span>
+<span class="nc" id="L24">        this.userRepository = userRepository;</span>
+<span class="nc" id="L25">    }</span>
+
+    @Override
+    public UserDTO createUser(UserDTO userDTO) throws UserException {
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (userRepository.findByMail(userDTO.getMail()).isPresent()) {</span>
+<span class="nc" id="L30">            throw new UserException(&quot;Email already registered&quot;);</span>
+        }
+<span class="nc bnc" id="L32" title="All 4 branches missed.">        if (userDTO.getPassword() == null || userDTO.getPassword().isEmpty()) {</span>
+<span class="nc" id="L33">            throw new UserException(UserException.PASSWORD_NULL);</span>
+        }
+<span class="nc" id="L35">        String hashPassword = encoder.encode(userDTO.getPassword());</span>
+<span class="nc" id="L36">        User newUser = new User(userDTO.getName(), hashPassword, userDTO.getMail());</span>
+<span class="nc" id="L37">        userRepository.save(newUser);</span>
+<span class="nc" id="L38">        return new UserDTO(newUser.getName(), hashPassword, newUser.getMail()); </span>
+    }
+
+    @Override
+    public boolean login(UserDTO userDTO) throws UserException {
+<span class="nc" id="L43">        UserDTO userStored = getUser(userDTO);</span>
+        
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (verify(userDTO.getPassword(), userStored.getPassword())) {</span>
+<span class="nc" id="L46">            return true;</span>
+        }
+<span class="nc" id="L48">        throw new UserException(UserException.PASSWORD_INVALID);</span>
+    }
+
+    public UserDTO getUser(UserDTO userDTO) throws UserException {
+<span class="nc" id="L52">        Optional&lt;User&gt; user = userRepository.findByMail(userDTO.getMail());</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (user.isEmpty()) {</span>
+<span class="nc" id="L54">            throw new UserException(UserException.USER_NOT_FOUND);</span>
+        }
+<span class="nc" id="L56">        User userL = user.get();</span>
+<span class="nc" id="L57">        return new UserDTO(userL.getName(),userL.getPassword(), userL.getMail());</span>
+    }
+
+    public boolean verify(String rawPassword, String storedPassword) throws UserException {
+<span class="nc bnc" id="L61" title="All 4 branches missed.">        if (rawPassword == null || rawPassword.isEmpty()) {</span>
+<span class="nc" id="L62">            throw new UserException(UserException.PASSWORD_NULL);</span>
+        }
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (!encoder.matches(rawPassword, storedPassword)) {</span>
+<span class="nc" id="L65">            throw new UserException(UserException.PASSWORD_INVALID);</span>
+        }
+<span class="nc" id="L67">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
