@@ -3,7 +3,7 @@ FROM openjdk:21
 WORKDIR /usrapp/bin
 
 ENV PORT 8080
-ENV SPRING_DATASOURCE_URL=jdbc:mysql://98.82.9.114:3306/properties?createDatabaseIfNotExist=true
+ENV SPRING_DATASOURCE_URL=jdbc:mysql://54.146.207.216:3306/properties?createDatabaseIfNotExist=true
 ENV SPRING_DATASOURCE_USERNAME=root
 ENV SPRING_DATASOURCE_PASSWORD=my-secret-pw
 

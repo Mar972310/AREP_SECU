@@ -24,8 +24,45 @@ sudo yum install certbot python3-certbot-apache -y
 
 - Creamos un dominio en https://www.duckdns.org/domains
 
-![h](imagenes/dns.png)
+![alt text](imagenes/ducks.png)
 
+
+creo un certificado local para que no me genere problemas al iniciar apache, luego de agregar la informacion de los virtual
+sudo openssl req -x509 -newkey rsa:4096 -keyout /etc/ssl/private/frontmariatorres.key -out /etc/ssl/certs/frontmariatorres.crt -days 365
+
+![alt text](imagenes/local.png)
+
+Habilitamos los puertos de la maquina 80 y 443. Posteriormente ejecutanmos el comando 
 sudo certbot --apache -d frontmariatorres.duckdns.org
+
+![alt text](imagenes/securitysd.png)
+
+el resultado esperado es:
+
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Requesting a certificate for frontmariatorres.duckdns.org
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/frontmariatorres.duckdns.org/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/frontmariatorres.duckdns.org/privkey.pem
+This certificate expires on 2025-06-11.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+Deploying certificate
+Successfully deployed certificate for frontmariatorres.duckdns.org to /etc/httpd/conf.d/frontmariatorres-le-ssl.conf
+Congratulations! You have successfully enabled HTTPS on https://frontmariatorres.duckdns.org
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+![alt text](imagenes/porfin.png)
+
+
+
+
 
 
