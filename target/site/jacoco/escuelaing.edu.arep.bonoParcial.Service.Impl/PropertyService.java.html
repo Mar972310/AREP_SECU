@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PropertyService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bonoParcial</a> &gt; <a href="index.source.html" class="el_package">escuelaing.edu.arep.bonoParcial.Service.Impl</a> &gt; <span class="el_source">PropertyService.java</span></div><h1>PropertyService.java</h1><pre class="source lang-java linenums">package escuelaing.edu.arep.bonoParcial.Service.Impl;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import escuelaing.edu.arep.bonoParcial.DTO.PropertyDTO;
+import escuelaing.edu.arep.bonoParcial.Exception.PropertyException;
+import escuelaing.edu.arep.bonoParcial.Repository.PropertyRepository;
+import escuelaing.edu.arep.bonoParcial.Service.PropertyServiceInterface;
+import escuelaing.edu.arep.bonoParcial.model.Property;
+
+/**
+ * Implementation of the PropertyServiceInterface.
+ * Provides business logic for managing properties.
+ */
+@Service
+public class PropertyService implements PropertyServiceInterface {
+
+    private final PropertyRepository propertyRepository;
+
+    /**
+     * Constructor for PropertyService.
+     *
+     * @param propertyRepository The repository used for property data access.
+     */
+    @Autowired
+<span class="fc" id="L30">    public PropertyService(PropertyRepository propertyRepository) {</span>
+<span class="fc" id="L31">        this.propertyRepository = propertyRepository;</span>
+<span class="fc" id="L32">    }</span>
+
+    /**
+     * Creates a new property.
+     *
+     * @param propertyDTO The property data transfer object.
+     * @return The created property as a DTO.
+     * @throws PropertyException If the property could not be created.
+     */
+    @Override
+    public PropertyDTO createProperty(PropertyDTO propertyDTO) throws PropertyException {
+        try {
+<span class="fc" id="L44">            Property property = toEntity(propertyDTO);</span>
+<span class="fc" id="L45">            property = propertyRepository.save(property);</span>
+<span class="fc" id="L46">            return toDTO(property);</span>
+<span class="fc" id="L47">        } catch (Exception e) {</span>
+<span class="fc" id="L48">            throw new PropertyException(PropertyException.PROPERTY_NOT_CREATE);</span>
+        }
+    }
+
+    /**
+     * Retrieves all properties.
+     *
+     * @return A list of PropertyDTOs.
+     */
+    @Override
+    public List&lt;PropertyDTO&gt; getallProperties() {
+<span class="fc" id="L59">        List&lt;Property&gt; properties = propertyRepository.findAll();</span>
+<span class="fc" id="L60">        return properties.stream().map(this::toDTO).collect(Collectors.toList());</span>
+    }
+
+    /**
+     * Retrieves a property by ID.
+     *
+     * @param id The property ID.
+     * @return The property as a DTO.
+     * @throws PropertyException If the property is not found or the ID is invalid.
+     */
+    @Override
+    public PropertyDTO getProperty(Long id) throws PropertyException {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (id == null) {</span>
+<span class="fc" id="L73">            throw new PropertyException(PropertyException.ID_INVALID);</span>
+        }
+<span class="fc" id="L75">        Property property = propertyRepository.findById(id)</span>
+<span class="pc" id="L76">                .orElseThrow(() -&gt; new PropertyException(PropertyException.PROPERTY_NOT_FOUND, String.valueOf(id)));</span>
+<span class="fc" id="L77">        return toDTO(property);</span>
+    }
+
+    /**
+     * Updates an existing property.
+     *
+     * @param id          The ID of the property to update.
+     * @param propertyDTO The updated property data.
+     * @return The updated property as a DTO.
+     * @throws PropertyException If the property does not exist or cannot be updated.
+     */
+    @Override
+    public PropertyDTO updateProperty(Long id, PropertyDTO propertyDTO) throws PropertyException {
+<span class="fc" id="L90">        Property property = propertyRepository.findById(id)</span>
+<span class="fc" id="L91">                .orElseThrow(() -&gt; new PropertyException(&quot;The property with ID &quot; + id + &quot; could not be updated because it does not exist&quot;));</span>
+        
+<span class="fc" id="L93">        property.setAddress(propertyDTO.getAddress());</span>
+<span class="fc" id="L94">        property.setDescription(propertyDTO.getDescription());</span>
+<span class="fc" id="L95">        property.setPrice(propertyDTO.getPrice());</span>
+<span class="fc" id="L96">        property.setSize(propertyDTO.getSize());</span>
+
+        try {
+<span class="fc" id="L99">            propertyRepository.save(property);</span>
+<span class="fc" id="L100">        } catch (Exception e) {</span>
+<span class="fc" id="L101">            throw new PropertyException(PropertyException.PROPERTY_NOT_UPDATE);</span>
+<span class="fc" id="L102">        }</span>
+
+<span class="fc" id="L104">        return toDTO(property);</span>
+    }
+
+    /**
+     * Deletes a property by ID.
+     *
+     * @param id The ID of the property to delete.
+     * @throws PropertyException If the property cannot be deleted.
+     */
+    public void deleteProperty(Long id) throws PropertyException {
+<span class="fc" id="L114">        propertyRepository.deleteById(id);</span>
+<span class="fc" id="L115">    }</span>
+
+    /**
+     * Converts a PropertyDTO to a Property entity.
+     *
+     * @param propertyDTO The DTO to convert.
+     * @return The corresponding Property entity.
+     */
+    private Property toEntity(PropertyDTO propertyDTO) {
+<span class="fc" id="L124">        return new Property(</span>
+            null,
+<span class="fc" id="L126">            propertyDTO.getAddress(),</span>
+<span class="fc" id="L127">            propertyDTO.getPrice(),</span>
+<span class="fc" id="L128">            propertyDTO.getSize(),</span>
+<span class="fc" id="L129">            propertyDTO.getDescription()</span>
+        );
+    }
+
+    /**
+     * Converts a Property entity to a PropertyDTO.
+     *
+     * @param property The entity to convert.
+     * @return The corresponding PropertyDTO.
+     */
+    private PropertyDTO toDTO(Property property) {
+<span class="fc" id="L140">        return new PropertyDTO(</span>
+<span class="fc" id="L141">            property.getId(),</span>
+<span class="fc" id="L142">            property.getAddress(),</span>
+<span class="fc" id="L143">            property.getPrice(),</span>
+<span class="fc" id="L144">            property.getSize(),</span>
+<span class="fc" id="L145">            property.getDescription()</span>
+        );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

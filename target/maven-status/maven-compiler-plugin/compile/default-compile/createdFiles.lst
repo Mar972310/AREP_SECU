@@ -1,0 +1,17 @@
+escuelaing/edu/arep/bonoParcial/DTO/PropertyDTO.class
+escuelaing/edu/arep/bonoParcial/Controller/PropertyController.class
+escuelaing/edu/arep/bonoParcial/Service/UserServiceInterface.class
+escuelaing/edu/arep/bonoParcial/model/User.class
+escuelaing/edu/arep/bonoParcial/Service/Impl/UserService.class
+escuelaing/edu/arep/bonoParcial/Repository/UserRepository.class
+escuelaing/edu/arep/bonoParcial/BonoParcialApplication.class
+escuelaing/edu/arep/bonoParcial/Repository/PropertyRepository.class
+escuelaing/edu/arep/bonoParcial/Security/WebConfig.class
+escuelaing/edu/arep/bonoParcial/Exception/UserException.class
+escuelaing/edu/arep/bonoParcial/Exception/PropertyException.class
+escuelaing/edu/arep/bonoParcial/DTO/UserDTO.class
+escuelaing/edu/arep/bonoParcial/Controller/UserController.class
+escuelaing/edu/arep/bonoParcial/Service/PropertyServiceInterface.class
+escuelaing/edu/arep/bonoParcial/Controller/viewController.class
+escuelaing/edu/arep/bonoParcial/model/Property.class
+escuelaing/edu/arep/bonoParcial/Service/Impl/PropertyService.class

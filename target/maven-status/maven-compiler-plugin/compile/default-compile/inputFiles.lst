@@ -1,0 +1,17 @@
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/BonoParcialApplication.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Controller/PropertyController.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Controller/UserController.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Controller/viewController.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/DTO/PropertyDTO.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/DTO/UserDTO.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Exception/PropertyException.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Exception/UserException.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Repository/PropertyRepository.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Repository/UserRepository.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Security/WebConfig.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Service/Impl/PropertyService.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Service/Impl/UserService.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Service/PropertyServiceInterface.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/Service/UserServiceInterface.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/model/Property.java
+/Users/maritzamonsalvebautista/Downloads/AREP_SECU/src/main/java/escuelaing/edu/arep/bonoParcial/model/User.java
